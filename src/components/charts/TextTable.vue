@@ -16,7 +16,7 @@
                         width="200">
                 </el-table-column>
                 <el-table-column
-                        v-if="tableData[0].time != undefined"
+                        v-if="tableData.length > 0 && Object.keys(tableData[0]).length > 3"
                         prop="time"
                         label="时间">
                 </el-table-column>
@@ -25,7 +25,7 @@
                         label="内容">
                 </el-table-column>
                 <el-table-column
-                        v-if="tableData[0].time != undefined"
+                        v-if="tableData.length > 0 && Object.keys(tableData[0]).length > 3"
                         prop="state"
                         label="状态">
                 </el-table-column>
@@ -60,8 +60,9 @@
         },
         computed:{
             total() {
+                let total = this.tableData.length;
                 this.currentPage = 1;
-                return this.tableData.length;
+                return total;
             }
         },
         methods: {

@@ -23,9 +23,7 @@ export function getDeviceRatio(){
   return dpr
 }
 export function timeStamp(bool,time){ //时间戳  bool (精确度)  时间字段数组
-  let obj = time;
-  let newDate = new Date();
-  newDate.setTime(obj * 1000);
+  let newDate = time|| new Date();
 
   let year = newDate.getFullYear();
   let month = newDate.getMonth() + 1;

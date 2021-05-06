@@ -1,9 +1,11 @@
+import {timeStamp} from "assets/js/base.js"
 function filterData(data, startTime, endTime, state, versions)
 {
+
     startTime = startTime || new Date(2021,1,1,0,0,0);
     endTime = endTime || new Date();
     state = state|| [2,3,4];
-    versions = versions|| data.list.length - 1
+    versions = versions === undefined ? data.list.length - 1: versions
 
     let result = {
         userNumb: 0,
@@ -53,7 +55,7 @@ function filterData(data, startTime, endTime, state, versions)
                 tempAnswer = {
                     detail: eI.reqD_detail,
                     user: e.request[0].user[0].user_name,
-                    time: new Date(e.request[0].req_time).toLocaleString('chinese').split('/').join('-'),
+                    time: timeStamp(true, new Date(e.request[0].req_time)),
                     state: changeState(e.req_state),
                 }
                 answer[iI][i] = tempAnswer;

@@ -19,7 +19,7 @@
                     <div class="item hanma">
                         <div class="title">涵码:</div>
                         <div>{{hanma}}</div>
-                        <button  class="change">更换</button>
+                        <button  class="change" @click="login" >更换</button>
                     </div>
                     <div class="item">
                         <div class="title">版本</div>
@@ -62,13 +62,16 @@
                 type: Number,
                 default: 0,
             },
+            hanma: {
+                type: String,
+                default: '',
+            },
         },
         data() {
             return {
                 drawer: false,
                 direction: 'ltr',
                 show:true,
-                hanma:'123',
                 startTime:'',
                 endTime:'',
                 wait:true,
@@ -101,6 +104,11 @@
             }
         },
         methods: {
+            login(){
+               this.$parent.showLogin = true;
+               this.drawer = false;
+               this.show = true;
+            },
             handleClose() {
                 this.show = true;
                 this.drawer = false;
@@ -152,7 +160,6 @@
                     startTime:'',
                     endTime:'',
                     state:'',
-                    version: '',
                 }
                 this.$emit("changeData",data)
                 this.startTime=''
@@ -226,6 +233,18 @@
     .choose{
         background-color: $accentColor;
         color: white;
+    }
+
+    .recover{
+        width: 180px;
+        @include removeButton;
+        background-color: $darkerAccentColor;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 20px;
+        color: white;
+        margin-top: 20px;
+        font-weight: bolder;
     }
 
 </style>

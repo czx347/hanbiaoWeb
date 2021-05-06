@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <Setting @changeData="changeData" :versionsNumber="versionsNumber">
+    <Setting @changeData="changeData" :versionsNumber="versionsNumber" :hanma="hanma">
       <div class="select">
         <i class="el-icon-s-operation" style="margin-bottom: 10px;"></i>
         <span>数 据 筛 选</span>
       </div>
     </Setting>
+      <Login @getHanmaData="getHanmaData" v-if="showLogin"/>
 
     <div class="main">
       <Top :userNumb="userNumb" :requestNumb="requestNumb"/>
-      <!--<SlideVerify/>-->
       <div class="middle">
         <div @click="jump(index)" v-for="(item, index) in question" :class="index == current ? 'choose': ''">{{index + 1}}</div>
       </div>
@@ -35,11 +35,12 @@
 </template>
 
 <script>
-import Setting from 'components/Setting.vue'
-import Top from 'components/Top.vue'
-import initData from 'common/data'
 import filterData from 'common/filterData'
-import SlideVerify from 'components/SlideVerify.vue'
+import initData from 'common/data'
+
+import Setting from 'components/Setting.vue'
+import Login from 'components/Login.vue'
+import Top from 'components/Top.vue'
 import Bar from 'components/charts/Bar.vue'
 import Pie from 'components/charts/Pie.vue'
 import TextTable from 'components/charts/TextTable.vue'
@@ -47,58 +48,70 @@ import TextTable from 'components/charts/TextTable.vue'
 let totalData = initData;
 
 export default {
-  name: 'app',
-  data() {
-    return {
-        current:0,
-        showData:[],
-        transitionName:'slide-left',
-        userNumb:0,
-        requestNumb:0,
-        versionsNumber: 0,
-        title:'',
-        question:[{
-            type:'',
-        }],
-    };
-  },
+    name: 'app',
+    data() {
+        return {
+            hanma:'演示',
+            showLogin:false,
+            current: 0,
+            showData: [],
+            transitionName: 'slide-left',
+            userNumb: 0,
+            requestNumb: 0,
+            versionsNumber: 0,
+            title: '',
+            question: [{
+                type: '',
+            }],
+        };
+    },
     mounted() {
         this.getDate(totalData);
     },
-  methods:{
-      initChar(){
-          this.title = this.question[this.current].title
-          this.showData = this.question[this.current].detail
-      },
-    jump(current){
-      this.current = current;
-      this.initChar();
-    },
-      getDate(data, startTime, endTime, state, version){
-        let result = filterData(data, startTime, endTime, state, version)
-        this.userNumb = result.userNumb
-        this.requestNumb = result.requestNumb
-        this.versionsNumber = result.versionsNumber
-        this.question = result.question
-          this.initChar();
-      },
-      changeData(data){
-        data.startTime = data.startTime == '' ?  '': new Date(data.startTime)
-        data.endTime =  data.endTime == '' ?  '': new Date(data.endTime)
-          this.current = 0;
-          this.getDate(totalData, data.startTime, data.endTime, data.state, data.version)
+    methods: {
+        initChar() {
+            this.title = this.question[this.current].title
+            this.showData = this.question[this.current].detail
+        },
+        jump(current) {
+            this.current = current;
+            this.initChar();
+        },
+        getDate(data, startTime, endTime, state, version) {
+            let result = filterData(data, startTime, endTime, state, version)
+            this.userNumb = result.userNumb
+            this.requestNumb = result.requestNumb
+            this.versionsNumber = result.versionsNumber
+            this.question = result.question
+            this.initChar();
+        },
+        changeData(data) {
+            data.startTime = data.startTime == '' ? '' : new Date(data.startTime)
+            data.endTime = data.endTime == '' ? '' : new Date(data.endTime)
+            this.current = 0;
+            this.getDate(totalData, data.startTime, data.endTime, data.state, data.version)
 
-      }
-  },
-  components: {
-      Setting,
-      Top,
-      SlideVerify,
-      Bar,
-      Pie,
-      TextTable,
-  },
-    watch:{
+        },
+        getHanmaData(data, hanma){
+            if(typeof data != "object"){
+                console.log("错误")
+                return
+            }
+            totalData = data;
+            this.getDate(totalData);
+            this.showLogin=false;
+            this.hanma=hanma;
+        }
+    },
+    components: {
+        Setting,
+        Login,
+        Top,
+        Bar,
+        Pie,
+        TextTable,
+    },
+    watch: {
         $route(to, from) {
             //如果to索引大于from索引,判断为前进状态,反之则为后退状态
             if (to.meta.index < from.meta.index) {

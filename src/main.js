@@ -3,6 +3,7 @@ import App from './App.vue'
 import './plugins/element.js'
 import './plugins/echarts.js'
 import './plugins/slideVerify.js'
+import './plugins/axios.js'
 
 Vue.config.productionTip = false
 
