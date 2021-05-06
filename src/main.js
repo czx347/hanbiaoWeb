@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './plugins/element.js'
-import ElementUI  from 'element-ui';
+import './plugins/echarts.js'
+import './plugins/slideVerify.js'
 
-Vue.use(ElementUI);
 Vue.config.productionTip = false
 
 new Vue({
