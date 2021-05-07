@@ -25,7 +25,7 @@
 
 <script>
     import SlideVerify from 'components/SlideVerify.vue'
-    import hanbiao from 'network/getData.js'
+    import {hanbiao} from 'network/getData.js'
 
     export default {
         name: "login",

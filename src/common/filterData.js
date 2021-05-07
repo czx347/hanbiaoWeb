@@ -78,6 +78,18 @@ function filterData(data, startTime, endTime, state, versions)
                         answer[iI][eD.value] ++;
                     }
                 })
+            }else if(eI.reqD_type == '定位') {
+                tempAnswer = {
+                    detail: eI.reqD_detail,
+                    user: e.request[0].user[0].user_name,
+                }
+                answer[iI][i] = tempAnswer;
+            }else if(eI.reqD_type == '照片') {
+              tempAnswer = {
+                detail: eI.reqD_detail,
+                user: e.request[0].user[0].user_name,
+              };
+              answer[iI][i] = tempAnswer;
             }else {
                 tempAnswer = eI.reqD_detail;
                 answer[iI][i] = tempAnswer;

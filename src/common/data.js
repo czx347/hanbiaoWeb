@@ -101,7 +101,7 @@ const data = {
                     "checked": true,
                     "value": "多选3"
                 }, {"checked": false, "value": "多选4"}], "reqD_type": "多选"
-            }, {"reqD_detail": "2021-02-21", "reqD_type": "日期"}, {
+            }, {"reqD_detail": "2020-02-21", "reqD_type": "日期"}, {
                 "reqD_detail": "00:00",
                 "reqD_type": "时间"
             }, {"reqD_detail": "", "reqD_type": "照片"}, {
