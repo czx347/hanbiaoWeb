@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <Setting @changeData="changeData" :versionsNumber="versionsNumber" :hanma="hanma">
+    <Setting @changeData="changeData" :versionsNumber="versionsNumber" :hanma="hanma"  ref="setting">
       <div class="select">
         <i class="el-icon-s-operation" style="margin-bottom: 10px;"></i>
         <span>数 据 筛 选</span>
       </div>
     </Setting>
-    <Login @getHanmaData="getHanmaData" v-if="showLogin"/>
+    <Login @getHanmaData="getHanmaData" v-if="showLogin" @recover="recover"/>
 
     <div class="main">
       <Top :userNumb="userNumb" :requestNumb="requestNumb"/>
@@ -72,7 +72,7 @@
     name: 'app',
     data() {
       return {
-        hanma: '演示',
+        hanma: '演示数据',
         showLogin: false,
         current: 0,
         showData: [],
@@ -122,7 +122,10 @@
         this.getDate(totalData);
         this.showLogin = false;
         this.hanma = hanma;
-      }
+      },
+      recover(){
+        this.$refs.setting.recover();
+      },
     },
     components: {
       Setting,

@@ -18,6 +18,7 @@
       <el-pagination
           layout="prev, pager, next"
           :total="total"
+          :current-page="currentPage"
           :page-size="pagesize"
           @current-change="current_change"
       >
@@ -32,14 +33,14 @@
 
   export default {
     name: "images",
-    props:{
+    props: {
       detailData: {
         type: Array,
-        default:[],
+        default: [],
       },
     },
-    computed:{
-      total(){
+    computed: {
+      total() {
         return this.images.length;
       }
     },
@@ -48,21 +49,22 @@
         deep: true,
         immediate: true,
         handler(val, oldVal) {
+          this.currentPage = 1;
           let tempImages = [];
           let tempUnImages = [];
           val.forEach((e) => {
-            if(typeof e.detail == 'object'){
+            if (typeof e.detail == 'object') {
               e.detail.forEach((eD) => {
                 tempImages.push({
-                  url:'',
-                  name:e.user,
-                  detail:eD.imag_detail,
+                  url: '',
+                  name: e.user,
+                  detail: eD.imag_detail,
                 })
                 tempUnImages.push(eD.imag_path)
               })
             }
           })
-          if(tempImages.length > 0) {
+          if (tempImages.length > 0) {
             this.images = tempImages;
             const that = this
             new Promise(function (resolve) {
@@ -79,13 +81,13 @@
     },
     data() {
       return {
-        pagesize:12,
+        pagesize: 12,
         currentPage: 1,
-        images:[],
+        images: [],
       }
     },
     methods: {
-      current_change:function(currentPage){
+      current_change: function (currentPage) {
         this.currentPage = currentPage;
       },
     }
@@ -93,17 +95,17 @@
 </script>
 
 <style scoped lang="scss">
-  .block{
+  .block {
     text-align: center;
   }
 
-  .images{
+  .images {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
   }
 
-  .imageItem{
+  .imageItem {
     width: 150px;
     height: 190px;
     margin: 10px;
@@ -115,15 +117,15 @@
     align-items: center;
   }
 
-  .title{
+  .title {
     width: 150px;
     text-align: center;
     font-size: small;
-    @include t-overflow;
+  @include t-overflow;
     margin-top: 5px;
   }
 
-  .name{
+  .name {
     font-size: large;
   @extend .title
   }
